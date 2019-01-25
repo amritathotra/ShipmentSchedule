@@ -1,0 +1,355 @@
+﻿@model ShippingScheduleDetails.Models.ShippingSchedule
+
+@{
+    ViewBag.Title = "CreateSheduling";
+}
+
+<h2>CreateSheduling</h2>
+
+
+@using (Html.BeginForm())
+ {
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>ShippingSchedule</h4>
+    <hr />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sponsor, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("sponsors", ViewBag.sponsors as List<SelectListItem>, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MasterProtocolid, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("masterprotocol", new SelectList(string.Empty, "Value", "Text"), "--Select Protocol--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MasterProtocolid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.AnalyteMatrix, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("assessment", new SelectList(string.Empty, "Value", "Text"), "--Select Assessment--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AnalyteMatrix, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShippingType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("shippingType", ViewBag.ShipType as List<SelectListItem>, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShippingType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="Week" style="display:none">
+        @Html.LabelFor(model => model.ShippingWeek, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ShippingWeek, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ShippingWeek, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="WeeksDay" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Day")
+            @Html.DropDownList("weeksday", new SelectList(string.Empty, "Value", "Text"), "--Select Day--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ShippingDay, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="Month" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Every")
+            @Html.EditorFor(model => model.ShippingMonth, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.Label("Month")
+            @Html.Label("On") <br>
+
+            @Html.RadioButton("monthlyRadioOption", "optionWeekDay")  @Html.Label("Week & Day") <br>
+            @Html.RadioButton("monthlyRadioOption", "optionDayofMonth") @Html.Label("Day of the month")
+            @Html.ValidationMessageFor(model => model.ShippingMonth, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="monthOptionWeek" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Week")
+            <input type="number" name="number" min="1" max="4" step="1" />
+        </div>
+    </div>
+
+    <div class="form-group" id="monthOptionWeekDay" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Day")
+            @Html.DropDownList("monthsWeekDay", new SelectList(string.Empty, "Value", "Text"), "--Select Day--", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group" id="monthOptionWeek" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Week")
+            <input type="number" name="number" min="1" max="4" step="1" />
+        </div>
+    </div>
+
+    <div class="form-group" id="monthOptionDayoftheMonth" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Day of the month")
+            @Html.DropDownList("DayoftheMonth", new SelectList(string.Empty, "Value", "Text"), "--Select Day--", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group" id="monthOptionParticularDayoftheMonth" style="display:none">
+
+        <div class="col-md-10">
+            @Html.Label("Day")
+            <input type="number" name="particularDay" min="1" max="30" step="1" />
+        </div>
+    </div>
+
+
+    <div class="form-group" id="TimePoint" style="display:none">
+        @Html.LabelFor(model => model.TriggerPoint, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="PeriodTimePointDiv">
+            @Html.DropDownList("PeriodTimePoint", new SelectList(string.Empty, "Value", "Text"), "--Select TimePoint--", new { @class = "form-control" })
+            <input id="remove" type="button" value=" - " />
+        </div>
+        <span id="additional"></span>
+        <input id="addBtn" type="button" value=" + " />
+      
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+ }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/jscript">
+    $(document).ready(function () {
+
+       /* Get the Protocol on change of Sponsor
+        **/
+        $('#sponsors').on("change", function () {
+            getMasterProtocolName();
+        });
+
+        $('#masterprotocol').on("change", function () {
+            getAssessment();
+        });
+       
+        function getMasterProtocolName() {
+            $("#masterprotocol").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetMasterProtocol")',
+                dataType: 'json',
+                data: { id: $("#sponsors").val() },
+                success: function (masterProtocol) {
+                    $.each(masterProtocol, function (i, Protocol) {
+                        $("#masterprotocol").append('<option value="' + Protocol.Value + '">' +
+                            Protocol.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve assessment.' + ex);
+                }
+            });
+        }
+
+         function getAssessment() {
+            $("#assessment").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetAssessment")',
+                dataType: 'json',
+                data: { id: $("#masterprotocol").val() },
+                success: function (liAssessment) {
+                    $.each(liAssessment, function (i, assessment) {
+                        $("#assessment").append('<option value="' + assessment.Value + '">' +
+                            assessment.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve assessment.' + ex);
+                }
+            });
+        }
+
+        $("#shippingType").change(function () {
+            $('#WeeksDay').val('');
+            $('#Week').val('');
+            $('#Month').val('');
+            $('#MonthOption').val('');            
+            $('#TimePoint').val('');
+            $('#optionWeekDay').val('');
+            $('#monthsWeekDay').val('');
+            
+            if ($(this).val() == 'Weekly') {
+                $('#WeeksDay').css({ 'display': 'block' });
+                $('#Week').css({ 'display': 'block' });
+                $('#Month').css({ 'display': 'none' });
+                $('#MonthOption').css({ 'display': 'none' });
+                $('#TimePoint').css({ 'display': 'none' });
+                $('#monthOptionWeek').css({ 'display': 'none' });
+                $('#monthOptionWeekDay').css({ 'display': 'none' });
+                $('#monthOptionDayoftheMonth').css({ 'display': 'none' });
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'none' });
+                getDay();
+
+            }
+            else if ($(this).val() == 'Monthly')
+            {
+                $('#WeeksDay').css({ 'display': 'none' });
+                $('#Week').css({ 'display': 'none' });
+                $('#Month').css({ 'display': 'inline-block' });
+                $('#MonthOption').css({ 'display': 'block' });
+                $('#TimePoint').css({ 'display': 'none' });                
+            }
+            else if ($(this).val() == 'TimePoint')
+            {
+                $('#WeeksDay').css({ 'display': 'none' });
+                $('#Week').css({ 'display': 'none' });
+                $('#Month').css({ 'display': 'none' });
+                $('#MonthOption').css({ 'display': 'none' });
+                $('#TimePoint').css({ 'display': 'block' });
+                $('#monthOptionWeek').css({ 'display': 'none' });
+                $('#monthOptionWeekDay').css({ 'display': 'none' });
+                $('#monthOptionDayoftheMonth').css({ 'display': 'none' });
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'none' });
+                GetTimePoint();
+            }
+            else
+            {
+                $('#WeeksDay').css({ 'display': 'none' });
+                $('#Week').css({ 'display': 'none' });
+                $('#Month').css({ 'display': 'none' });
+                $('#MonthOption').css({ 'display': 'none' });
+                $('#monthOptionWeek').css({ 'display': 'none' });
+                $('#monthOptionWeekDay').css({ 'display': 'none' });       
+                $('#monthOptionDayoftheMonth').css({ 'display': 'none' });
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'none' });
+            }
+        });
+
+
+        $("input[name=monthlyRadioOption]:radio").change(function () {
+            
+            if ($("input:radio:checked").val() == 'optionWeekDay') {
+                $('#monthOptionWeek').css({ 'display': 'block' });
+                $('#monthOptionWeekDay').css({ 'display': 'block' });
+                $('#monthOptionDayoftheMonth').css({ 'display': 'none' });
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'none' });
+            }
+            else if ($("input:radio:checked").val() == 'optionDayofMonth') {
+                GetDayoftheMonthList();
+                $('#monthOptionWeek').css({ 'display': 'none' });
+                $('#monthOptionWeekDay').css({ 'display': 'none' });
+                $('#monthOptionDayoftheMonth').css({ 'display': 'block' });
+                
+            }
+            else {
+                $('#monthOptionWeek').css({ 'display': 'none' });
+                $('#monthOptionWeekDay').css({ 'display': 'none' });
+                $('#monthOptionDayoftheMonth').css({ 'display': 'none' });
+            }
+        });
+
+        function getDay() {
+            $("#weeksday").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDays")',
+                dataType: 'json',
+                success: function (DayList) {
+                    $.each(DayList, function (i, day) {
+                        $("#weeksday").append('<option value="' + day.Value + '">' +
+                            day.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve assessment.' + ex);
+                }
+            });
+        }
+
+        function GetDayoftheMonthList() {
+            $("#DayoftheMonth").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDayoftheMonth")',
+                dataType: 'json',
+                success: function (DayoftheMonthList) {
+                    $.each(DayoftheMonthList, function (i, day) {
+                        $("#DayoftheMonth").append('<option value="' + day.Value + '">' +
+                            day.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve assessment.' + ex);
+                }
+            });
+        }
+
+        function GetTimePoint() {
+            $("#PeriodTimePoint").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTimePoints")',
+                dataType: 'json',
+                data: { id: $("#assessment").val() },
+                success: function (TimePointList) {
+                    $.each(TimePointList, function (i, day) {
+                        $("#PeriodTimePoint").append('<option value="' + day.Value + '">' +
+                            day.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve assessment.' + ex);
+                }
+            });
+        }
+
+        $("#DayoftheMonth").change(function () {
+            if ($(this).val() == 'ParticularDay') {
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'block' });
+            }
+            else {
+                $('#monthOptionParticularDayoftheMonth').css({ 'display': 'none' });
+            }
+        });
+
+        $("#addBtn").on("click", function () {
+            $("#PeriodTimePointDiv:last").clone(true).insertBefore(this);
+        });
+
+        $("#remove").click(function (e) {
+            $(this).closest("#PeriodTimePointDiv").remove();
+            e.preventDefault();
+        });
+        
+    });
+</script>
+
+
